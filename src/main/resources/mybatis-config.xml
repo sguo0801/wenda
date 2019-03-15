@@ -18,5 +18,8 @@
     </settings>
 
     <!-- Continue going here -->
+    <!--<mappers>-->
+        <!--<mapper resource="com.nowcoder.wenda.dao/QuestionDAO.xml"/>-->
+    <!--</mappers>-->
 
 </configuration>
