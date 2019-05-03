@@ -1,12 +1,12 @@
-package com.nowcoder.controller;
+package com.nowcoder.wenda.controller;
 
-import com.nowcoder.model.HostHolder;
-import com.nowcoder.model.Message;
-import com.nowcoder.model.User;
-import com.nowcoder.model.ViewObject;
-import com.nowcoder.service.MessageService;
-import com.nowcoder.service.UserService;
-import com.nowcoder.util.WendaUtil;
+import com.nowcoder.wenda.model.HostHolder;
+import com.nowcoder.wenda.model.Message;
+import com.nowcoder.wenda.model.User;
+import com.nowcoder.wenda.model.ViewObject;
+import com.nowcoder.wenda.service.MessageService;
+import com.nowcoder.wenda.service.UserService;
+import com.nowcoder.wenda.util.WendaUtil;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

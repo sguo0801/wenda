@@ -1,7 +1,7 @@
-package com.nowcoder.configuration;
+package com.nowcoder.wenda.configuration;
 
-import com.nowcoder.interceptor.LoginRequiredInterceptor;
-import com.nowcoder.interceptor.PassportInterceptor;
+import com.nowcoder.wenda.interceptor.LoginRequiredInterceptor;
+import com.nowcoder.wenda.interceptor.PassportInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -20,8 +20,8 @@ public class WendaWebConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(passportInterceptor);
-        registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/user/*");
+        registry.addInterceptor(passportInterceptor);  //写在前面,因为先要定义hostholder
+        registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/user/*");  //访问后面这个页面的时候需要访问拦截器
         super.addInterceptors(registry);
     }
 }

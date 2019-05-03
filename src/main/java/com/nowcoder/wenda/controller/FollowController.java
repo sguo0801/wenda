@@ -1,21 +1,20 @@
-package com.nowcoder.controller;
+package com.nowcoder.wenda.controller;
 
-import com.nowcoder.async.EventModel;
-import com.nowcoder.async.EventProducer;
-import com.nowcoder.async.EventType;
-import com.nowcoder.model.*;
-import com.nowcoder.service.*;
-import com.nowcoder.util.RedisKeyUtil;
-import com.nowcoder.util.WendaUtil;
-import org.springframework.beans.factory.ObjectFactory;
+import com.nowcoder.wenda.async.EventModel;
+import com.nowcoder.wenda.async.EventProducer;
+import com.nowcoder.wenda.async.EventType;
+import com.nowcoder.wenda.model.*;
+import com.nowcoder.wenda.service.*;
+import com.nowcoder.wenda.util.WendaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by nowcoder on 2016/7/30.
@@ -160,7 +159,7 @@ public class FollowController {
             }
             ViewObject vo = new ViewObject();
             vo.set("user", user);
-            vo.set("commentCount", commentService.getUserCommentCount(uid));
+            //vo.set("commentCount", commentService.getUserCommentCount(uid));
             vo.set("followerCount", followService.getFollowerCount(EntityType.ENTITY_USER, uid));
             vo.set("followeeCount", followService.getFolloweeCount(uid, EntityType.ENTITY_USER));
             if (localUserId != 0) {

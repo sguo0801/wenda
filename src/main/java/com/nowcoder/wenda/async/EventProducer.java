@@ -1,13 +1,10 @@
-package com.nowcoder.async;
+package com.nowcoder.wenda.async;
 
 import com.alibaba.fastjson.JSONObject;
-import com.nowcoder.util.JedisAdapter;
-import com.nowcoder.util.RedisKeyUtil;
+import com.nowcoder.wenda.util.JedisAdapter;
+import com.nowcoder.wenda.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 /**
  * Created by nowcoder on 2016/7/30.

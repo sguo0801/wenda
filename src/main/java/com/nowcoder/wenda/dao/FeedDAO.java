@@ -1,14 +1,15 @@
-package com.nowcoder.dao;
+package com.nowcoder.wenda.dao;
 
-import com.nowcoder.model.Comment;
-import com.nowcoder.model.Feed;
-import org.apache.ibatis.annotations.*;
+import com.nowcoder.wenda.model.Feed;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created by nowcoder on 2016/7/2.
- */
+@Repository
 @Mapper
 public interface FeedDAO {
     String TABLE_NAME = " feed ";

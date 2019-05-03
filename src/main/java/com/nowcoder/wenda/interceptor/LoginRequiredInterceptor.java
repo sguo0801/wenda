@@ -1,6 +1,6 @@
-package com.nowcoder.interceptor;
+package com.nowcoder.wenda.interceptor;
 
-import com.nowcoder.model.HostHolder;
+import com.nowcoder.wenda.model.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;

@@ -1,4 +1,4 @@
-package com.nowcoder.model;
+package com.nowcoder.wenda.model;
 
 /**
  * Created by nowcoder on 2016/7/9.
@@ -6,4 +6,6 @@ package com.nowcoder.model;
 public class EntityType {
     public static int ENTITY_QUESTION = 1;
     public static int ENTITY_COMMENT = 2;
+    public static int ENTITY_USER = 3;
+
 }

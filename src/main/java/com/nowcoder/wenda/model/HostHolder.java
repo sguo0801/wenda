@@ -1,4 +1,4 @@
-package com.nowcoder.model;
+package com.nowcoder.wenda.model;
 
 import org.springframework.stereotype.Component;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class HostHolder {
-    private static ThreadLocal<User> users = new ThreadLocal<User>();
+    private static ThreadLocal<User> users = new ThreadLocal<User>();  //线程本地变量
 
     public User getUser() {
         return users.get();

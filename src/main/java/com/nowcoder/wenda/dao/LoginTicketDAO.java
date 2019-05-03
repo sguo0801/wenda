@@ -1,6 +1,6 @@
-package com.nowcoder.dao;
+package com.nowcoder.wenda.dao;
 
-import com.nowcoder.model.LoginTicket;
+import com.nowcoder.wenda.model.LoginTicket;
 import org.apache.ibatis.annotations.*;
 
 /**

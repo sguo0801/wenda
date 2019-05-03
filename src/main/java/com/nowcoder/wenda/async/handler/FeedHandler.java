@@ -1,22 +1,18 @@
-package com.nowcoder.async.handler;
+package com.nowcoder.wenda.async.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.nowcoder.async.EventHandler;
-import com.nowcoder.async.EventModel;
-import com.nowcoder.async.EventType;
-import com.nowcoder.model.*;
-import com.nowcoder.service.*;
-import com.nowcoder.util.JedisAdapter;
-import com.nowcoder.util.RedisKeyUtil;
-import org.apache.commons.lang.math.RandomUtils;
+import com.nowcoder.wenda.async.EventHandler;
+import com.nowcoder.wenda.async.EventModel;
+import com.nowcoder.wenda.async.EventType;
+import com.nowcoder.wenda.model.*;
+import com.nowcoder.wenda.service.*;
+import com.nowcoder.wenda.util.JedisAdapter;
+import com.nowcoder.wenda.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-/**
- * Created by nowcoder on 2016/7/30.
- */
 @Component
 public class FeedHandler implements EventHandler {
     @Autowired
@@ -36,7 +32,7 @@ public class FeedHandler implements EventHandler {
 
 
     private String buildFeedData(EventModel model) {
-        Map<String, String> map = new HashMap<String ,String>();
+        Map<String, String> map = new HashMap<String, String>();
         // 触发用户是通用的
         User actor = userService.getUser(model.getActorId());
         if (actor == null) {

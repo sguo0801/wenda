@@ -1,18 +1,17 @@
-package com.nowcoder.controller;
+package com.nowcoder.wenda.controller;
 
-import com.nowcoder.model.*;
-import com.nowcoder.service.CommentService;
-import com.nowcoder.service.QuestionService;
-import com.nowcoder.service.UserService;
-import com.nowcoder.util.WendaUtil;
+import com.nowcoder.wenda.model.*;
+import com.nowcoder.wenda.service.CommentService;
+import com.nowcoder.wenda.service.LikeService;
+import com.nowcoder.wenda.service.QuestionService;
+import com.nowcoder.wenda.service.UserService;
+import com.nowcoder.wenda.util.WendaUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,15 +35,29 @@ public class QuestionController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    LikeService likeService;
+
     @RequestMapping(value = "/question/{qid}", method = {RequestMethod.GET})
     public String questionDetail(Model model, @PathVariable("qid") int qid) {
         Question question = questionService.getById(qid);
         model.addAttribute("question", question);
+        //model.addAttribute("user", userService.getUser(question.getUserId()));
+
         List<Comment> commentList = commentService.getCommentsByEntity(qid, EntityType.ENTITY_QUESTION);
         List<ViewObject> vos = new ArrayList<>();
         for (Comment comment : commentList) {
             ViewObject vo = new ViewObject();
             vo.set("comment", comment);
+            if (hostHolder.getUser() == null) {
+                vo.set("liked", 0);
+            } else {
+                vo.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, comment.getId()));
+            }
+
+            vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
+
+
             vo.set("user", userService.getUser(comment.getUserId()));
             vos.add(vo);
         }
@@ -62,8 +75,8 @@ public class QuestionController {
             question.setCreatedDate(new Date());
             question.setTitle(title);
             if (hostHolder.getUser() == null) {
-                question.setUserId(WendaUtil.ANONYMOUS_USERID);
-                // return WendaUtil.getJSONString(999);
+               // question.setUserId(WendaUtil.ANONYMOUS_USERID);
+              return WendaUtil.getJSONString(999);
             } else {
                 question.setUserId(hostHolder.getUser().getId());
             }

@@ -1,4 +1,4 @@
-package com.nowcoder.async;
+package com.nowcoder.wenda.async;
 
 import java.util.List;
 

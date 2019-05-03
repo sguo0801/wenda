@@ -51,9 +51,9 @@ public class MailSender implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         mailSender = new JavaMailSenderImpl();
-        mailSender.setUsername("course@nowcoder.com");
-        mailSender.setPassword("NKnk123");
-        mailSender.setHost("smtp.exmail.qq.com");
+        mailSender.setUsername("1146886229@qq.com");
+        mailSender.setPassword("qxlryzsoqgarhcdg");
+        mailSender.setHost("smtp.qq.com");
         //mailSender.setHost("smtp.qq.com");
         mailSender.setPort(465);
         mailSender.setProtocol("smtps");

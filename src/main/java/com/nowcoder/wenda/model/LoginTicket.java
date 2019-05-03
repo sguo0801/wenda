@@ -1,4 +1,4 @@
-package com.nowcoder.model;
+package com.nowcoder.wenda.model;
 
 import java.util.Date;
 

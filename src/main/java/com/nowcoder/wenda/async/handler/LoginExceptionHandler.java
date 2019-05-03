@@ -1,10 +1,9 @@
-package com.nowcoder.async.handler;
+package com.nowcoder.wenda.async.handler;
 
-import com.nowcoder.async.EventHandler;
-import com.nowcoder.async.EventModel;
-import com.nowcoder.async.EventType;
-import com.nowcoder.util.MailSender;
-import org.springframework.beans.factory.ObjectFactory;
+import com.nowcoder.wenda.async.EventHandler;
+import com.nowcoder.wenda.async.EventModel;
+import com.nowcoder.wenda.async.EventType;
+import com.nowcoder.wenda.util.MailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

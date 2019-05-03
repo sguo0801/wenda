@@ -1,8 +1,8 @@
-package com.nowcoder.async;
+package com.nowcoder.wenda.async;
 
 import com.alibaba.fastjson.JSON;
-import com.nowcoder.util.JedisAdapter;
-import com.nowcoder.util.RedisKeyUtil;
+import com.nowcoder.wenda.util.JedisAdapter;
+import com.nowcoder.wenda.util.RedisKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -11,14 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
-import sun.java2d.pipe.hw.AccelDeviceEventNotifier;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
 
 /**
  * Created by nowcoder on 2016/7/30.

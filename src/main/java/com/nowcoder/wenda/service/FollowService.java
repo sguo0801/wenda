@@ -1,12 +1,10 @@
-package com.nowcoder.service;
+package com.nowcoder.wenda.service;
 
-import com.nowcoder.util.JedisAdapter;
-import com.nowcoder.util.RedisKeyUtil;
-import org.springframework.beans.factory.ObjectFactory;
+import com.nowcoder.wenda.util.JedisAdapter;
+import com.nowcoder.wenda.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Response;
 import redis.clients.jedis.Transaction;
 
 import java.util.ArrayList;
@@ -14,9 +12,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by rainday on 16/8/11.
- */
 @Service
 public class FollowService {
     @Autowired

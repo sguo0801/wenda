@@ -1,30 +1,23 @@
-package com.nowcoder.controller;
+package com.nowcoder.wenda.controller;
 
-import com.nowcoder.model.Comment;
-import com.nowcoder.model.EntityType;
-import com.nowcoder.model.HostHolder;
-import com.nowcoder.model.ViewObject;
-import com.nowcoder.service.CommentService;
-import com.nowcoder.service.QuestionService;
-import com.nowcoder.service.SensitiveService;
-import com.nowcoder.service.UserService;
-import com.nowcoder.util.WendaUtil;
+import com.nowcoder.wenda.model.Comment;
+import com.nowcoder.wenda.model.EntityType;
+import com.nowcoder.wenda.model.HostHolder;
+import com.nowcoder.wenda.service.CommentService;
+import com.nowcoder.wenda.service.QuestionService;
+import com.nowcoder.wenda.service.SensitiveService;
+import com.nowcoder.wenda.service.UserService;
+import com.nowcoder.wenda.util.WendaUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StreamUtils;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.HtmlUtils;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by nowcoder on 2016/7/2.
@@ -75,6 +68,6 @@ public class CommentController {
         } catch (Exception e) {
             logger.error("增加评论失败" + e.getMessage());
         }
-        return "redirect:/question/" + String.valueOf(questionId);
+        return "redirect:/question/" + questionId;
     }
 }

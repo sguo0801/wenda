@@ -1,14 +1,14 @@
-package com.nowcoder.async.handler;
+package com.nowcoder.wenda.async.handler;
 
-import com.nowcoder.async.EventHandler;
-import com.nowcoder.async.EventModel;
-import com.nowcoder.async.EventType;
-import com.nowcoder.model.EntityType;
-import com.nowcoder.model.Message;
-import com.nowcoder.model.User;
-import com.nowcoder.service.MessageService;
-import com.nowcoder.service.UserService;
-import com.nowcoder.util.WendaUtil;
+import com.nowcoder.wenda.async.EventHandler;
+import com.nowcoder.wenda.async.EventModel;
+import com.nowcoder.wenda.async.EventType;
+import com.nowcoder.wenda.model.EntityType;
+import com.nowcoder.wenda.model.Message;
+import com.nowcoder.wenda.model.User;
+import com.nowcoder.wenda.service.MessageService;
+import com.nowcoder.wenda.service.UserService;
+import com.nowcoder.wenda.util.WendaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

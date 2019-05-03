@@ -1,7 +1,7 @@
-package com.nowcoder.service;
+package com.nowcoder.wenda.service;
 
-import com.nowcoder.util.JedisAdapter;
-import com.nowcoder.util.RedisKeyUtil;
+import com.nowcoder.wenda.util.JedisAdapter;
+import com.nowcoder.wenda.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

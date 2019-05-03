@@ -1,10 +1,10 @@
-package com.nowcoder.interceptor;
+package com.nowcoder.wenda.interceptor;
 
-import com.nowcoder.dao.LoginTicketDAO;
-import com.nowcoder.dao.UserDAO;
-import com.nowcoder.model.HostHolder;
-import com.nowcoder.model.LoginTicket;
-import com.nowcoder.model.User;
+import com.nowcoder.wenda.dao.LoginTicketDAO;
+import com.nowcoder.wenda.dao.UserDAO;
+import com.nowcoder.wenda.model.HostHolder;
+import com.nowcoder.wenda.model.LoginTicket;
+import com.nowcoder.wenda.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * Created by nowcoder on 2016/7/3.
  */
-@Component
+@Component  //拦截器依赖注入
 public class PassportInterceptor implements HandlerInterceptor {
 
     @Autowired

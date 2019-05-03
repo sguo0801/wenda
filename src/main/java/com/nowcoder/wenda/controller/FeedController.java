@@ -1,27 +1,20 @@
-package com.nowcoder.controller;
+package com.nowcoder.wenda.controller;
 
-import com.nowcoder.model.*;
-import com.nowcoder.service.*;
-import com.nowcoder.util.JedisAdapter;
-import com.nowcoder.util.RedisKeyUtil;
+import com.nowcoder.wenda.model.*;
+import com.nowcoder.wenda.service.*;
+import com.nowcoder.wenda.util.JedisAdapter;
+import com.nowcoder.wenda.util.RedisKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-/**
- * Created by nowcoder on 2016/7/15.
- */
 @Controller
 public class FeedController {
     private static final Logger logger = LoggerFactory.getLogger(FeedController.class);

@@ -1,15 +1,12 @@
-package com.nowcoder.service;
+package com.nowcoder.wenda.service;
 
-import com.nowcoder.dao.FeedDAO;
-import com.nowcoder.model.Feed;
+import com.nowcoder.wenda.dao.FeedDAO;
+import com.nowcoder.wenda.model.Feed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by nowcoder on 2016/8/12.
- */
 @Service
 public class FeedService {
     @Autowired
