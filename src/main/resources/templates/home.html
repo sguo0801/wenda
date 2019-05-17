@@ -30,8 +30,8 @@
     Title: $!{title}
 
 
-    Parse: #parse("header.html")
-    Include: #include("header.html")
+    Parse: #parse("header.html")   ##这里header.html已经变啦.需要解析的时候用parse##
+    Include: #include("header.html")    ##不解析的话用include,直接把文本传进去##
 
     #macro (render_color, $index, $color)
         Color Render Macro $index, $color
@@ -45,7 +45,7 @@
     #set($helloworld1 = "$!{hello} world")
     $!hello
     $helloworld1
-    #set($helloworld2 = '$!{hello} world')
+    #set($helloworld2 = '$!{hello} world')   ##单引号当成字符串,不会解析##
     $helloworld2
 
 

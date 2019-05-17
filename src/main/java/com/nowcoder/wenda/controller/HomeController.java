@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by nowcoder on 2016/7/15.
- */
-@Controller
+//@Controller
 public class HomeController {
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
