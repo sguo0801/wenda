@@ -2,15 +2,12 @@ package com.nowcoder.wenda.model;
 
 import java.util.Date;
 
-/**
- * Created by nowcoder on 2016/7/15.
- */
 public class Question {  //放的是字段
     private int id;
     private String title;
     private String content;
     private Date createdDate;
-    private int userId;
+    private int userId;   //问题的发表人
     private int commentCount;
 
     public int getId() {

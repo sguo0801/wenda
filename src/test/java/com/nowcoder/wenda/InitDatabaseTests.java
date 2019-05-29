@@ -22,7 +22,7 @@ import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WendaApplication.class)
-@Sql("/init-schema.sql")
+@Sql("/init-schema.sql")   //每次在运行测试程序,先执行下建表的sql语句.
 public class InitDatabaseTests {
 	@Autowired
 	UserDAO userDAO;
@@ -75,7 +75,7 @@ public class InitDatabaseTests {
 		Assert.assertNull(userDAO.selectById(1));
 
 
-		System.out.print(questionDAO.selectLatestQuestions(0,0,10));
+		System.out.print(questionDAO.selectLatestQuestions(0,0,10));  //指的是userid为0,则打印全部的问题,在xml中有这样的条件语句,如果userid不为0,则打印对应userid所发表的问题.
 	}
 
 }

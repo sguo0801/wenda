@@ -2,14 +2,12 @@ package com.nowcoder.wenda.model;
 
 import java.util.Date;
 
-/**
- * Created by nowcoder on 2016/7/3.
- */
+//确认token账户信息
 public class LoginTicket {
     private int id;
     private int userId;
     private Date expired;
-    private int status;// 0有效，1无效
+    private int status;// 0有效，1无效,登出则置1.
     private String ticket;
 
     public String getTicket() {

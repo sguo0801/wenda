@@ -3,9 +3,6 @@ package com.nowcoder.wenda.dao;
 import com.nowcoder.wenda.model.LoginTicket;
 import org.apache.ibatis.annotations.*;
 
-/**
- * Created by nowcoder on 2016/7/2.
- */
 @Mapper
 public interface LoginTicketDAO {
     String TABLE_NAME = "login_ticket";
@@ -19,6 +16,6 @@ public interface LoginTicketDAO {
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where ticket=#{ticket}"})
     LoginTicket selectByTicket(String ticket);
 
-    @Update({"update ", TABLE_NAME, " set status=#{status} where ticket=#{ticket}"})
+    @Update({"update ", TABLE_NAME, " set status=#{status} where ticket=#{ticket}"})   //登出则将status置1.
     void updateStatus(@Param("ticket") String ticket, @Param("status") int status);
 }

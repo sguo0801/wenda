@@ -8,9 +8,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
-/**
- * Created by nowcoder on 2016/7/15.
- */
+//连接controller与dao之间的
 @Service
 public class QuestionService {
     @Autowired
