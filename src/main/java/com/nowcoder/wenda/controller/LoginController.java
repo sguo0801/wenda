@@ -70,13 +70,15 @@ public class LoginController {
 
     //当页面没有账户信息不能访问时进行跳转注册或登录并且自动返回原来页面
     @RequestMapping(path = {"/reglogin"}, method = {RequestMethod.GET})    //现在打开user/*页面跳转回登录页面,登录后再调回user页面,这两步都 需要把next的参数(即user的url)记录下来
+    //#####这里必须写在regloginPage方法前面,否则不能退出立即登录.(多参数写后面,与方法名无关,没有多态的概念)#####
+    public String regloginPage(Model model){   //可以退出立即登录的切换login网页
+        return "login";
+    }
     public String regloginPage(Model model, @RequestParam(value = "next", required = false) String next) {
         model.addAttribute("next", next);
         return "login";
     }
-    public String reg(Model model){
-        return "login";
-    }
+
 
     //登录功能
     @RequestMapping(path = {"/login/"}, method = {RequestMethod.POST})

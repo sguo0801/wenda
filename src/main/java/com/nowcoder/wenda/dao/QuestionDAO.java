@@ -15,7 +15,7 @@ public interface QuestionDAO {
 
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS,
             ") values (#{title},#{content},#{createdDate},#{userId},#{commentCount})"})
-    int addQuestion(Question question);
+    int addQuestion(Question question);   //int为添加后自增的id.
 
 
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where id=#{id}"})

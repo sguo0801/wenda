@@ -72,18 +72,18 @@ public class QuestionController {
             question.setCreatedDate(new Date());
             question.setTitle(title);
             if (hostHolder.getUser() == null) {
-               // question.setUserId(WendaUtil.ANONYMOUS_USERID);
-              return WendaUtil.getJSONString(999);
+                question.setUserId(WendaUtil.ANONYMOUS_USERID);    //发布问题如果没有User变量则使用匿名,如果wendautil中匿名值为3,则对应user的id为3,即是User2进行发表,也可以走下面
+              //return WendaUtil.getJSONString(999);  //就是强制登录才能进行发表问题
             } else {
                 question.setUserId(hostHolder.getUser().getId());
             }
-            if (questionService.addQuestion(question) > 0) {
+            if (questionService.addQuestion(question) > 0) {  //添加问题成功,则返回code=0;说明可以进行json串的直接解析.
                 return WendaUtil.getJSONString(0);
             }
         } catch (Exception e) {
             logger.error("增加题目失败" + e.getMessage());
         }
-        return WendaUtil.getJSONString(1, "失败");
+        return WendaUtil.getJSONString(1, "失败");  //问题发表失败则,code为1,返回的消息为msg内容.不会解析输入的内容
     }
 
 }

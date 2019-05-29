@@ -24,8 +24,9 @@ public class QuestionService {
         return questionDAO.selectLatestQuestions(userId, offset, limit);
     }
 
+    //前缀树进行过滤污秽词汇
     public int addQuestion(Question question) {
-        question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
+        question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));   //就是把输入的title与content内容中的html标签全部去掉(就是进行转义)
         question.setContent(HtmlUtils.htmlEscape(question.getContent()));
         // 敏感词过滤
         question.setTitle(sensitiveService.filter(question.getTitle()));

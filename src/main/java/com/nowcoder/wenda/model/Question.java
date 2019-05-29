@@ -3,7 +3,7 @@ package com.nowcoder.wenda.model;
 import java.util.Date;
 
 public class Question {  //放的是字段
-    private int id;
+    private int id;   //就是addQuestion添加后的返回id
     private String title;
     private String content;
     private Date createdDate;
