@@ -39,7 +39,7 @@ public class QuestionController {
     public String questionDetail(Model model, @PathVariable("qid") int qid) {
         Question question = questionService.getById(qid);
         model.addAttribute("question", question);
-        model.addAttribute("user", userService.getUser(question.getUserId()));
+        //model.addAttribute("user", userService.getUser(question.getUserId()));
 
         List<Comment> commentList = commentService.getCommentsByEntity(qid, EntityType.ENTITY_QUESTION);
         List<ViewObject> vos = new ArrayList<>();
@@ -72,8 +72,8 @@ public class QuestionController {
             question.setCreatedDate(new Date());
             question.setTitle(title);
             if (hostHolder.getUser() == null) {
-                question.setUserId(WendaUtil.ANONYMOUS_USERID);    //发布问题如果没有User变量则使用匿名,如果wendautil中匿名值为3,则对应user的id为3,即是User2进行发表,也可以走下面
-              //return WendaUtil.getJSONString(999);  //就是强制登录才能进行发表问题
+                //question.setUserId(WendaUtil.ANONYMOUS_USERID);    //发布问题如果没有User变量(使用postman)发布则使用匿名,如果wendautil中匿名值为3,则对应user的id为3,即是User2进行发表,也可以走下面
+              return WendaUtil.getJSONString(999);  //就是强制登录才能进行发表问题,这时候不能从postman里面进行添加问题.
             } else {
                 question.setUserId(hostHolder.getUser().getId());
             }
