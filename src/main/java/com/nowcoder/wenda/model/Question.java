@@ -8,7 +8,7 @@ public class Question {  //放的是字段
     private String content;
     private Date createdDate;
     private int userId;   //问题的发表人
-    private int commentCount;
+    private int commentCount;    //该问题下的评论数
 
     public int getId() {
         return id;

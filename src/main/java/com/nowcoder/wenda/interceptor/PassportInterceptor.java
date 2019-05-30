@@ -27,8 +27,8 @@ public class PassportInterceptor implements HandlerInterceptor {
 
     @Autowired
     private HostHolder hostHolder;
-    //处在所有http请求的最前面,判断用户是谁,然后找到该用户放到本地线程中,就是把当前的user的信息保存在此时的页面中ThreadLocal的user中.这个副本是对应这个线程的,不同线程的变量间不会改变(就是别人同一时刻登陆这个网页的账号更改与我无关)
-    //保证以后的所有我使用(我这个线程)的服务(后台可以直接访问)都能找到该用户
+    //处在所有http请求的最前面,判断用户是谁,然后找到该用户放到本地线程中,就是把当前的user的信息保存在此时的页面中ThreadLocal的user中.这个副本是对应这个线程的,不同线程的变量间不会改变(就是别人同一时刻登陆这个网页,他账号更改与我无关)
+    //保证以后的所有我使用(我这个线程)的服务(后台可以直接访问)都能找到该用户(我自己登录的用户,不会把购买的课程变到别人身上)
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         //先要找到ticket,从链路请求过来的cookie中

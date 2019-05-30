@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository  //能够执行数据库xml方式的关键,这里面是选取最后的问题的方法用了xml,是可以IOC的关键.如果是只有注解就不需要
+@Repository  //能够执行数据库xml方式的关键,这里面是选取最后的问题的方法selectLatestQuestions用了xml,是可以IOC的关键.如果是只有注解就不需要
 @Mapper
 public interface QuestionDAO {
     String TABLE_NAME = " question ";

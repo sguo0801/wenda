@@ -6,10 +6,10 @@ public class Comment {
     private int id;
     private int userId;
     private int entityId;
-    private int entityType;
+    private int entityType;    //评论的位置(人或者问题)类型为int
     private String content;
     private Date createdDate;
-    private int status;
+    private int status;   //一条评论的删除与否定义的状态
 
     public int getId() {
         return id;
