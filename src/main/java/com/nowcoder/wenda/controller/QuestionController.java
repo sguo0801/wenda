@@ -77,7 +77,7 @@ public class QuestionController {
             } else {
                 question.setUserId(hostHolder.getUser().getId());
             }
-            if (questionService.addQuestion(question) > 0) {  //添加问题成功,则返回code=0;说明可以进行json串的直接解析.
+            if (questionService.addQuestion(question) > 0) {  //添加问题成功,则返回code=0;说明可以进行json串的直接解析.如果questionservice失败,则此时int为0,这里不符合条件,则code为1,返回msg
                 return WendaUtil.getJSONString(0);
             }
         } catch (Exception e) {
