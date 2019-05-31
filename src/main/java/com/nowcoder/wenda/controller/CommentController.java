@@ -55,7 +55,7 @@ public class CommentController {
                 //return "redirect:/reglogin";  //这里是跳转登录
             }
             comment.setContent(content);  //内容(上面已经过滤)
-            comment.setEntityId(questionId);    //这里方法是在 问题 下添加评论,所以用questionId,同questioncomment中的qid
+            comment.setEntityId(questionId);    //这里方法是在 问题 下添加评论,所以用questionId,同questioncomment中的qid.
             comment.setEntityType(EntityType.ENTITY_QUESTION);  //设置评论位置的类型,这里是问题.在model中有相关静态常量.
             comment.setCreatedDate(new Date());
             comment.setStatus(0);

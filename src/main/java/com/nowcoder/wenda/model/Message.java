@@ -2,9 +2,6 @@ package com.nowcoder.wenda.model;
 
 import java.util.Date;
 
-/**
- * Created by nowcoder on 2016/7/9.
- */
 public class Message {
     private int id;
     private int fromId;
@@ -12,7 +9,7 @@ public class Message {
     private String content;
     private Date createdDate;
     private int hasRead;
-    private String conversationId;
+    private String conversationId;   //要用下划线连接的String类型
 
     public int getId() {
         return id;
@@ -62,7 +59,7 @@ public class Message {
         this.hasRead = hasRead;
     }
 
-    public String getConversationId() {
+    public String getConversationId() {   //使getConversationId两边保持一致
         if (fromId < toId) {
             return String.format("%d_%d", fromId, toId);
         }

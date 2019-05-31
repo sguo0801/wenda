@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by nowcoder on 2016/7/9.
- */
 @Controller
 public class MessageController {
     private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
@@ -39,18 +36,22 @@ public class MessageController {
     HostHolder hostHolder;
 
     @RequestMapping(path = {"/msg/list"}, method = {RequestMethod.GET})
-    public String conversationDetail(Model model) {
+    public String conversationList(Model model) {
         try {
+            if (hostHolder.getUser() == null){
+                return  "redirect:/reglogin";
+            }
             int localUserId = hostHolder.getUser().getId();
-            List<ViewObject> conversations = new ArrayList<ViewObject>();
-            List<Message> conversationList = messageService.getConversationList(localUserId, 0, 10);
+
+            List<Message> conversationList = messageService.getConversationList(localUserId, 0, 10);  //消息列表拿出来分割
+            List<ViewObject> conversations = new ArrayList<ViewObject>();   //vo的列表
             for (Message msg : conversationList) {
                 ViewObject vo = new ViewObject();
-                vo.set("conversation", msg);
-                int targetId = msg.getFromId() == localUserId ? msg.getToId() : msg.getFromId();
-                User user = userService.getUser(targetId);
+                vo.set("conversation", msg);   //注意左边名称不要写错,跟前端页面有关
+                int targetId = msg.getFromId() == localUserId ? msg.getToId() : msg.getFromId();   //找到对方id
+                User user = userService.getUser(targetId);  //找到对方的信息
                 vo.set("user", user);
-                vo.set("unread", messageService.getConvesationUnreadCount(localUserId, msg.getConversationId()));
+                vo.set("unread", messageService.getConvesationUnreadCount(localUserId, msg.getConversationId()));    //##看过之后将hasread标记标为1.使得未读数量归0.
                 conversations.add(vo);
             }
                 model.addAttribute("conversations", conversations);
@@ -63,8 +64,9 @@ public class MessageController {
     @RequestMapping(path = {"/msg/detail"}, method = {RequestMethod.GET})
     public String conversationDetail(Model model, @Param("conversationId") String conversationId) {
         try {
+            //在网页中添加分页后的数据
             List<Message> conversationList = messageService.getConversationDetail(conversationId, 0, 10);
-            List<ViewObject> messages = new ArrayList<>();
+            List<ViewObject> messages = new ArrayList<>();   //像头像这种什么类型都有的信息就用ViewObject
             for (Message msg : conversationList) {
                 ViewObject vo = new ViewObject();
                 vo.set("message", msg);
@@ -84,10 +86,13 @@ public class MessageController {
     }
 
 
+    //优先写发送消息
     @RequestMapping(path = {"/msg/addMessage"}, method = {RequestMethod.POST})
-    @ResponseBody
+    @ResponseBody   //弹框最后是一个json的返回.这里用 @ResponseBody
     public String addMessage(@RequestParam("toName") String toName,
                              @RequestParam("content") String content) {
+
+        //先确定发送人id和接收人id存在
         try {
             if (hostHolder.getUser() == null) {
                 return WendaUtil.getJSONString(999, "未登录");
@@ -97,6 +102,7 @@ public class MessageController {
                 return WendaUtil.getJSONString(1, "用户不存在");
             }
 
+            //开始构造消息
             Message msg = new Message();
             msg.setContent(content);
             msg.setFromId(hostHolder.getUser().getId());
@@ -104,10 +110,10 @@ public class MessageController {
             msg.setCreatedDate(new Date());
             //msg.setConversationId(fromId < toId ? String.format("%d_%d", fromId, toId) : String.format("%d_%d", toId, fromId));
             messageService.addMessage(msg);
-            return WendaUtil.getJSONString(0);
+            return WendaUtil.getJSONString(0);   // 添加成功
         } catch (Exception e) {
             logger.error("增加站内信失败" + e.getMessage());
-            return WendaUtil.getJSONString(1, "插入站内信失败");
+            return WendaUtil.getJSONString(1, "插入站内信失败");//{code:1}为失败,并返回msg
         }
     }
 

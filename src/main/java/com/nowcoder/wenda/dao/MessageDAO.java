@@ -20,12 +20,15 @@ public interface MessageDAO {
 
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where conversation_id=#{conversationId} order by id desc limit #{offset}, #{limit}"})
     List<Message> getConversationDetail(@Param("conversationId") String conversationId,
-                                        @Param("offset") int offset, @Param("limit") int limit);
+                                        @Param("offset") int offset, @Param("limit") int limit);   //分页
 
+    //把未读的数量显示出来
     @Select({"select count(id) from ", TABLE_NAME, " where has_read=0 and to_id=#{userId} and conversation_id=#{conversationId}"})
     int getConvesationUnreadCount(@Param("userId") int userId, @Param("conversationId") String conversationId);
 
-        @Select({"select ", INSERT_FIELDS, " ,count(id) as id from ( select * from ", TABLE_NAME, " where from_id=#{userId} or to_id=#{userId} order by id desc) tt group by conversation_id  order by created_date desc limit #{offset}, #{limit}"})
+    //列表比较负责,要找每个对话组的第一条,按时间排序.
+    @Select({"select ", INSERT_FIELDS, " ,count(id) as id from ( select * from ", TABLE_NAME, " where from_id=#{userId} or " +   //先把跟其相关的选出来
+            "to_id=#{userId} order by id desc) tt group by conversation_id  order by created_date desc limit #{offset}, #{limit}"})
     List<Message> getConversationList(@Param("userId") int userId,
                                       @Param("offset") int offset, @Param("limit") int limit);
 ////cnt无法映射到message model中，所以用id(id在list中没用)
