@@ -49,13 +49,15 @@ public class QuestionController {
             vo.set("comment", comment);   //##这边comment不包括user吗,跟前端有关,这里填进去的是什么,内容吗????????
 
 
+            //加入点赞点踩的信息.
+            //先是看当前用户的喜欢状态,没有登录自然就是不赞不踩
             if (hostHolder.getUser() == null) {
                 vo.set("liked", 0);
             } else {
                 vo.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, comment.getId()));
             }
 
-            //赞踩
+            //赞踩的数量
             vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
 
 

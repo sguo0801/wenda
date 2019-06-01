@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * Created by nowcoder on 2016/7/30.
- */
+//点赞业务(这里是存评论的)
 @Controller
 public class LikeController {
     @Autowired
@@ -38,8 +36,9 @@ public class LikeController {
     EventProducer eventProducer;
 
     @RequestMapping(path = {"/like"}, method = {RequestMethod.POST})
-    @ResponseBody
+    @ResponseBody   //json的所以直接返回串内容
     public String like(@RequestParam("commentId") int commentId) {
+        //先登录
         if (hostHolder.getUser() == null) {
             return WendaUtil.getJSONString(999);
         }
@@ -52,7 +51,7 @@ public class LikeController {
                 .setExt("questionId", String.valueOf(comment.getEntityId())));
 
         long likeCount = likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId);
-        return WendaUtil.getJSONString(0, String.valueOf(likeCount));
+        return WendaUtil.getJSONString(0, String.valueOf(likeCount));   //code:0代表可以生成json,msg就是后面的这个字符串.这里只是文字,不是对象.就不需要序列化和反序列化
     }
 
     @RequestMapping(path = {"/dislike"}, method = {RequestMethod.POST})

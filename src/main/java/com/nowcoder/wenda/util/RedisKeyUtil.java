@@ -1,8 +1,6 @@
 package com.nowcoder.wenda.util;
 
-/**
- * Created by nowcoder on 2016/7/30.
- */
+//针对不同业务生成不同的key,避免命令混淆弄出错,这里是针对不同业务加不同前缀
 public class RedisKeyUtil {
     private static String SPLIT = ":";
     private static String BIZ_LIKE = "LIKE";
@@ -15,7 +13,7 @@ public class RedisKeyUtil {
     private static String BIZ_TIMELINE = "TIMELINE";
 
     public static String getLikeKey(int entityType, int entityId) {
-        return BIZ_LIKE + SPLIT + String.valueOf(entityType) + SPLIT + String.valueOf(entityId);
+        return BIZ_LIKE + SPLIT + entityType + SPLIT + entityId;    //根据类型和id生成喜欢的类型key
     }
 
     public static String getDisLikeKey(int entityType, int entityId) {

@@ -18,7 +18,7 @@ import java.util.Set;
 
 
 @Service
-public class JedisAdapter implements InitializingBean {
+public class JedisAdapter implements InitializingBean {  //实现初始化变量
     private static final Logger logger = LoggerFactory.getLogger(JedisAdapter.class);
     private JedisPool pool;
 
@@ -27,13 +27,13 @@ public class JedisAdapter implements InitializingBean {
     }
 
     public static void main(String[] argv) {
-        Jedis jedis = new Jedis("redis://localhost:6379/9");
-        jedis.flushDB();  //把9库清空
+        Jedis jedis = new Jedis("redis://localhost:6379/9");   //一共16个数据库,选择第九个
+        jedis.flushDB();  //把9库清空,fiushAll是把所有数据库清空
 
         jedis.set("hello", "world");
         print(1, jedis.get("hello"));
         jedis.rename("hello", "newhello");
-        jedis.setex("hello2", 15, "world");
+        jedis.setex("hello2", 15, "world");  //过15秒删除,验证码
 
         jedis.set("pv", "100");
         jedis.incr("pv");
@@ -48,10 +48,10 @@ public class JedisAdapter implements InitializingBean {
         String listName = "list";
         jedis.del(listName);
         for (int i = 0; i < 10; ++i) {
-            jedis.lpush(listName, "a" + String.valueOf(i));
+            jedis.lpush(listName, "a" + String.valueOf(i));  //list的插入
         }
 
-        print(5, jedis.lrange(listName, 0, 10));
+        print(5, jedis.lrange(listName, 0, 10));   //取值范围从前,索引从到10.
         print(6, jedis.lrange(listName, 0, 3));
         print(7, jedis.llen(listName));
         print(8, jedis.lpop(listName));
@@ -73,7 +73,7 @@ public class JedisAdapter implements InitializingBean {
         print(15, jedis.hkeys(userKey));
 
 
-        //set
+        //set   点赞点踩进行去重
         String likeKey1 = "commentLike1";
         String likeKey2 = "commentLike2";
         for (int i = 0; i < 10; ++i) {
@@ -96,8 +96,9 @@ public class JedisAdapter implements InitializingBean {
         print(21, jedis.smembers(likeKey1));
         print(21, jedis.smembers(likeKey2));
 
-        print(22, jedis.scard(likeKey1));  //人数
+        print(22, jedis.scard(likeKey1));  //人数,可以看关注的人数
 
+        //这里是按分值score排序,是有序集合(类似优先队列)
         String rankKey = "rankKey";
         jedis.zadd(rankKey, 15, "jim");
         jedis.zadd(rankKey, 60, "Ben");
@@ -109,10 +110,11 @@ public class JedisAdapter implements InitializingBean {
         print(32, jedis.zscore(rankKey, "Lucy"));
         jedis.zincrby(rankKey, 2, "Luc");
         print(33, jedis.zscore(rankKey, "Luc"));
-        print(34, jedis.zrange(rankKey, 0, 100));
+        print(34, jedis.zrange(rankKey, 0, 100));   //进行排名,索引为名次(0为最开始)
         print(34, jedis.zrange(rankKey, 1, 3));
-        print(34, jedis.zrevrange(rankKey, 1, 3));
+        print(34, jedis.zrevrange(rankKey, 1, 3));   //从高分到低分排序
 
+        //遍历该集合60~100分的
         for (Tuple tuple : jedis.zrangeByScoreWithScores(rankKey, "60", "100")) {
             print(37, tuple.getElement() + " : " + String.valueOf(tuple.getScore()));
         }
@@ -129,7 +131,7 @@ public class JedisAdapter implements InitializingBean {
         jedis.zadd(setKey, 1, "d");
         jedis.zadd(setKey, 1, "e");
 
-        print(40, jedis.zlexcount(setKey, "-", "+"));
+        print(40, jedis.zlexcount(setKey, "-", "+"));   //边界区间
         print(40, jedis.zlexcount(setKey, "(b", "(d"));
         print(40, jedis.zlexcount(setKey, "(b", "[d"));
         jedis.zrem(setKey, "b");
@@ -145,6 +147,7 @@ public class JedisAdapter implements InitializingBean {
 //            j.close();
 //        }
 
+        //####这边就是异步的主要数据存储过程,序列化和反序列化在缓存中存取数据
         User user = new User();
         user.setHeadUrl("a.png");
         user.setName("xx");
@@ -152,37 +155,54 @@ public class JedisAdapter implements InitializingBean {
         user.setSalt("salt");
         user.setId(1);
         print(46, JSONObject.toJSONString(user));
-        jedis.set("user1", JSONObject.toJSONString(user));
+        jedis.set("user1", JSONObject.toJSONString(user));  //把user的数据通过json串存在redis中
 
         String value = jedis.get("user1");
-        User user2 = JSON.parseObject(value, User.class);
-        print(47, user2);
+        User user2 = JSON.parseObject(value, User.class);   //反序列化把存在redis的字符串取出来,并且转化成类
+        print(47, user2);    //这时候打印的就是user这个类的地址
         int k = 2;
 
 
     }
 
+    //进行初始化redis连接池,都是直接调用redis方法,之前连接到连接池
     @Override
     public void afterPropertiesSet() throws Exception {
         pool = new JedisPool("redis://localhost:6379/10");
 
     }
 
-    public long sadd(String key, String value) {
-        Jedis jedis = null;
-        try {
-            jedis = pool.getResource();
-            return jedis.sadd(key, value);
-        } catch (Exception e) {
-            logger.error("发生异常" + e.getMessage());
-        } finally {
-            if (jedis != null) {
-                jedis.close();
+    //进行向redis中添加数据,一个key-value参数,sadd方法默认返回值为long
+    public long sadd(String key, String value){
+        Jedis jedis = null;  //初始为null
+        try{
+            jedis = pool.getResource();   //先连接到连接池
+            return jedis.sadd(key, value);  //进行添加数据到该redis库.
+        }catch (Exception e){
+            logger.info("发生异常" + e.getMessage());
+        }finally {
+            if (jedis != null){
+                jedis.close();   //不关闭默认只有8条.
             }
         }
         return 0;
     }
+//    public long sadd(String key, String value) {
+//        Jedis jedis = null;
+//        try {
+//            jedis = pool.getResource();
+//            return jedis.sadd(key, value);
+//        } catch (Exception e) {
+//            logger.error("发生异常" + e.getMessage());
+//        } finally {
+//            if (jedis != null) {
+//                jedis.close();
+//            }
+//        }
+//        return 0;
+//    }
 
+    //删除key-value元素
     public long srem(String key, String value) {
         Jedis jedis = null;
         try {
@@ -198,6 +218,7 @@ public class JedisAdapter implements InitializingBean {
         return 0;
     }
 
+    //求集合中的数量
     public long scard(String key) {
         Jedis jedis = null;
         try {
@@ -213,6 +234,7 @@ public class JedisAdapter implements InitializingBean {
         return 0;
     }
 
+    //判断是否存在该元素
     public boolean sismember(String key, String value) {
         Jedis jedis = null;
         try {
