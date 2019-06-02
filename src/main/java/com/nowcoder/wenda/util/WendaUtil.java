@@ -11,7 +11,7 @@ public class WendaUtil {
     private static final Logger logger = LoggerFactory.getLogger(WendaUtil.class);
 
     public static int ANONYMOUS_USERID = 3;  //匿名ID,仅仅是一个静态值.与业务无关,需要匿名时将id设置为这个
-    public static int SYSTEM_USERID = 4;
+    public static int SYSTEM_USERID = 4;    //管理员id,用于作为系统通知点赞的fromid
 
 
     public static String getJSONString(int code) {

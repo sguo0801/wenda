@@ -1,8 +1,6 @@
 package com.nowcoder.wenda.async;
 
-/**
- * Created by nowcoder on 2016/7/30.
- */
+//表示事件类型(枚举型Enum)
 public enum EventType {
     LIKE(0),
     COMMENT(1),

@@ -15,9 +15,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by nowcoder on 2016/7/30.
- */
+//点赞的异步handler
 @Component
 public class LikeHandler implements EventHandler {
     @Autowired
@@ -34,13 +32,13 @@ public class LikeHandler implements EventHandler {
         message.setCreatedDate(new Date());
         User user = userService.getUser(model.getActorId());
         message.setContent("用户" + user.getName()
-                + "赞了你的评论,http://127.0.0.1:8080/question/" + model.getExt("questionId"));
+                + "赞了你的评论,http://127.0.0.1:8080/question/" + model.getExt("questionId"));  //这边的questionId是要再设置一下,否则为空
 
         messageService.addMessage(message);
     }
 
     @Override
-    public List<EventType> getSupportEventTypes() {
-        return Arrays.asList(EventType.LIKE);
+    public List<EventType> getSupportEventTypes() {  //type是枚举类型
+        return Arrays.asList(EventType.LIKE);  //返回一个列表,里面的值是Like的值
     }
 }
