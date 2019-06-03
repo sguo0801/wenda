@@ -24,13 +24,14 @@ public class RedisKeyUtil {
         return BIZ_EVENTQUEUE;
     }
 
-    // 某个实体的粉丝key
-    public static String getFollowerKey(int entityType, int entityId) {
+    // 某个实体的粉丝key,每种类型都有粉丝
+    //比如我关注了一个问题,我就是这个问题的粉丝.我的关注列表有这个问题.
+    public static String getFollowerKey(int entityType, int entityId) {    //这个问题实体(用entity指定这个问题)  粉丝的key
         return BIZ_FOLLOWER + SPLIT + String.valueOf(entityType) + SPLIT + String.valueOf(entityId);
     }
 
-    // 每个用户对某类实体的关注key
-    public static String getFolloweeKey(int userId, int entityType) {
+    // 每个用户对某类实体的关注key(关注了谁),比如可以是该用户关注的所有问题,不需要entityid
+    public static String getFolloweeKey(int userId, int entityType) {   //某一个用户userid关注某一类实体entitytype 的key(关注对象)
         return BIZ_FOLLOWEE + SPLIT + String.valueOf(userId) + SPLIT + String.valueOf(entityType);
     }
 

@@ -52,7 +52,7 @@ public class InitDatabaseTests {
 
 			//互相关注
 			for (int j = 1; j < i; ++j) {
-				followService.follow(j, EntityType.ENTITY_USER, i);
+				followService.follow(j, EntityType.ENTITY_USER, i);  //j关注用户i
 			}
 
 			user.setPassword("newpassword");

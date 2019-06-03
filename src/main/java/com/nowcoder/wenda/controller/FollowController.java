@@ -16,9 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by nowcoder on 2016/7/30.
- */
 @Controller
 public class FollowController {
     @Autowired
@@ -39,6 +36,7 @@ public class FollowController {
     @Autowired
     EventProducer eventProducer;
 
+    //都是json串,所以是返回@ResponseBody
     @RequestMapping(path = {"/followUser"}, method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
     public String followUser(@RequestParam("userId") int userId) {
@@ -46,14 +44,15 @@ public class FollowController {
             return WendaUtil.getJSONString(999);
         }
 
-        boolean ret = followService.follow(hostHolder.getUser().getId(), EntityType.ENTITY_USER, userId);
+        boolean ret = followService.follow(hostHolder.getUser().getId(), EntityType.ENTITY_USER, userId);  //这里是关注的人
 
+        //异步处理关注
         eventProducer.fireEvent(new EventModel(EventType.FOLLOW)
                 .setActorId(hostHolder.getUser().getId()).setEntityId(userId)
                 .setEntityType(EntityType.ENTITY_USER).setEntityOwnerId(userId));
 
         // 返回关注的人数
-        return WendaUtil.getJSONString(ret ? 0 : 1, String.valueOf(followService.getFolloweeCount(hostHolder.getUser().getId(), EntityType.ENTITY_USER)));
+        return WendaUtil.getJSONString(ret ? 0 : 1, String.valueOf(followService.getFolloweeCount(hostHolder.getUser().getId(), EntityType.ENTITY_USER)));   //关注成功了这边是把我所关注的人数更新
     }
 
     @RequestMapping(path = {"/unfollowUser"}, method = {RequestMethod.POST})
@@ -73,6 +72,7 @@ public class FollowController {
         return WendaUtil.getJSONString(ret ? 0 : 1, String.valueOf(followService.getFolloweeCount(hostHolder.getUser().getId(), EntityType.ENTITY_USER)));
     }
 
+    //关注问题
     @RequestMapping(path = {"/followQuestion"}, method = {RequestMethod.POST})
     @ResponseBody
     public String followQuestion(@RequestParam("questionId") int questionId) {
@@ -91,11 +91,12 @@ public class FollowController {
                 .setActorId(hostHolder.getUser().getId()).setEntityId(questionId)
                 .setEntityType(EntityType.ENTITY_QUESTION).setEntityOwnerId(q.getUserId()));
 
+        //显示关注问题的人数
         Map<String, Object> info = new HashMap<>();
         info.put("headUrl", hostHolder.getUser().getHeadUrl());
         info.put("name", hostHolder.getUser().getName());
         info.put("id", hostHolder.getUser().getId());
-        info.put("count", followService.getFollowerCount(EntityType.ENTITY_QUESTION, questionId));
+        info.put("count", followService.getFollowerCount(EntityType.ENTITY_QUESTION, questionId));   //er就是粉丝
         return WendaUtil.getJSONString(ret ? 0 : 1, info);
     }
 
@@ -123,6 +124,7 @@ public class FollowController {
         return WendaUtil.getJSONString(ret ? 0 : 1, info);
     }
 
+    //看粉丝的页面,是一个页面包含每个用户的信息列表.
     @RequestMapping(path = {"/user/{uid}/followers"}, method = {RequestMethod.GET})
     public String followers(Model model, @PathVariable("uid") int userId) {
         List<Integer> followerIds = followService.getFollowers(EntityType.ENTITY_USER, userId, 0, 10);
@@ -136,6 +138,7 @@ public class FollowController {
         return "followers";
     }
 
+    //看关注人的信息
     @RequestMapping(path = {"/user/{uid}/followees"}, method = {RequestMethod.GET})
     public String followees(Model model, @PathVariable("uid") int userId) {
         List<Integer> followeeIds = followService.getFollowees(userId, EntityType.ENTITY_USER, 0, 10);
@@ -162,7 +165,7 @@ public class FollowController {
             //vo.set("commentCount", commentService.getUserCommentCount(uid));
             vo.set("followerCount", followService.getFollowerCount(EntityType.ENTITY_USER, uid));
             vo.set("followeeCount", followService.getFolloweeCount(uid, EntityType.ENTITY_USER));
-            if (localUserId != 0) {
+            if (localUserId != 0) { //=0则没登录
                 vo.set("followed", followService.isFollower(localUserId, EntityType.ENTITY_USER, uid));
             } else {
                 vo.set("followed", false);

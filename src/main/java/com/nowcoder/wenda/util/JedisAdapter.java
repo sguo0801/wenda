@@ -73,7 +73,7 @@ public class JedisAdapter implements InitializingBean {  //实现初始化变量
         print(15, jedis.hkeys(userKey));
 
 
-        //set   点赞点踩进行去重
+        //set   点赞点踩进行去重,###可以按数值进行排序###ologn搜索
         String likeKey1 = "commentLike1";
         String likeKey2 = "commentLike2";
         for (int i = 0; i < 10; ++i) {
@@ -295,13 +295,16 @@ public class JedisAdapter implements InitializingBean {  //实现初始化变量
         return null;
     }
 
+
+    //关注列表
     public Jedis getJedis() {
         return pool.getResource();
     }
 
+    //开启
     public Transaction multi(Jedis jedis) {
         try {
-            return jedis.multi();
+            return jedis.multi();      //开启事务,要执行多个命令(原子性)
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
         } finally {
@@ -309,12 +312,13 @@ public class JedisAdapter implements InitializingBean {  //实现初始化变量
         return null;
     }
 
+    //执行
     public List<Object> exec(Transaction tx, Jedis jedis) {
         try {
-            return tx.exec();
+            return tx.exec();  //在一个事务中排队执行命令
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
-            tx.discard();
+            tx.discard();   //回滚
         } finally {
             if (tx != null) {
                 try {
@@ -331,6 +335,7 @@ public class JedisAdapter implements InitializingBean {  //实现初始化变量
         return null;
     }
 
+    //添加到关注列表,score为时间(方便排序新旧),返回的long可以看是否>0判断添加成功
     public long zadd(String key, double score, String value) {
         Jedis jedis = null;
         try {
@@ -361,6 +366,7 @@ public class JedisAdapter implements InitializingBean {  //实现初始化变量
         return 0;
     }
 
+    //排序返回的是String集合,后面要转成Integer的ID列表.这里是要找到关注的所有粉丝
     public Set<String> zrange(String key, int start, int end) {
         Jedis jedis = null;
         try {
@@ -391,6 +397,7 @@ public class JedisAdapter implements InitializingBean {  //实现初始化变量
         return null;
     }
 
+    //看队列里有多少数字
     public long zcard(String key) {
         Jedis jedis = null;
         try {
