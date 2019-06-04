@@ -31,10 +31,12 @@ public class FeedController {
     @Autowired
     JedisAdapter jedisAdapter;
 
+
+    //推的模式,主动告诉粉丝发生了新鲜事
     @RequestMapping(path = {"/pushfeeds"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getPushFeeds(Model model) {
         int localUserId = hostHolder.getUser() != null ? hostHolder.getUser().getId() : 0;
-        List<String> feedIds = jedisAdapter.lrange(RedisKeyUtil.getTimelineKey(localUserId), 0, 10);
+        List<String> feedIds = jedisAdapter.lrange(RedisKeyUtil.getTimelineKey(localUserId), 0, 10);   //取出被插入(推)的feedid,根据id取feed
         List<Feed> feeds = new ArrayList<Feed>();
         for (String feedId : feedIds) {
             Feed feed = feedService.getById(Integer.parseInt(feedId));
@@ -46,11 +48,12 @@ public class FeedController {
         return "feeds";
     }
 
+    //拉的模式
     @RequestMapping(path = {"/pullfeeds"}, method = {RequestMethod.GET, RequestMethod.POST})
     private String getPullFeeds(Model model) {
         int localUserId = hostHolder.getUser() != null ? hostHolder.getUser().getId() : 0;
         List<Integer> followees = new ArrayList<>();
-        if (localUserId != 0) {
+        if (localUserId != 0) {   //登录状态
             // 关注的人
             followees = followService.getFollowees(localUserId, EntityType.ENTITY_USER, Integer.MAX_VALUE);
         }

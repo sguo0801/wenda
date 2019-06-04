@@ -12,7 +12,8 @@ public class FeedService {
     @Autowired
     FeedDAO feedDAO;
 
-    public List<Feed> getUserFeeds(int maxId, List<Integer> userIds, int count) {
+    //拉取新鲜事,xml语句
+    public List<Feed> getUserFeeds(int maxId, List<Integer> userIds, int count) {   //userids可以使关注的列表
         return feedDAO.selectUserFeeds(maxId, userIds, count);
     }
 

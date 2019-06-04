@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Feed {
     private int id;
-    private int type;
+    private int type;  //不同类型
     private int userId;
     private Date createdDate;
     private String data;
@@ -52,6 +52,8 @@ public class Feed {
         this.data = data;
         dataJSON = JSONObject.parseObject(data);
     }
+
+    //跟viewobjects一样的,建get方法是让模板自动渲染
     public String get(String key) {
         return dataJSON == null ? null : dataJSON.getString(key);
     }
