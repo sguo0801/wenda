@@ -1,5 +1,8 @@
 package com.nowcoder.wenda.controller;
 
+import com.nowcoder.wenda.async.EventModel;
+import com.nowcoder.wenda.async.EventProducer;
+import com.nowcoder.wenda.async.EventType;
 import com.nowcoder.wenda.model.*;
 import com.nowcoder.wenda.service.CommentService;
 import com.nowcoder.wenda.service.LikeService;
@@ -34,6 +37,9 @@ public class QuestionController {
 
     @Autowired
     LikeService likeService;
+
+    @Autowired
+    EventProducer eventProducer;
 
     @RequestMapping(value = "/question/{qid}", method = {RequestMethod.GET})
     public String questionDetail(Model model, @PathVariable("qid") int qid) {
@@ -87,6 +93,9 @@ public class QuestionController {
                 question.setUserId(hostHolder.getUser().getId());
             }
             if (questionService.addQuestion(question) > 0) {  //添加问题成功,则返回code=0;说明可以进行json串的直接解析.如果questionservice失败,则此时int为0,这里不符合条件,则code为1,返回msg
+                eventProducer.fireEvent(new EventModel(EventType.ADD_QUESTION)
+                        .setActorId(question.getUserId()).setEntityId(question.getId())
+                        .setExt("title", question.getTitle()).setExt("content", question.getContent()));
                 return WendaUtil.getJSONString(0);
             }
         } catch (Exception e) {

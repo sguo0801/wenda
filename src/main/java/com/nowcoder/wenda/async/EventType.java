@@ -7,7 +7,9 @@ public enum EventType {
     LOGIN(2),
     MAIL(3),
     FOLLOW(4),
-    UNFOLLOW(5);
+    UNFOLLOW(5),
+    ADD_QUESTION(6);   //注意逗号,只有一个分号
+
 
     private int value;
     EventType(int value) { this.value = value; }
